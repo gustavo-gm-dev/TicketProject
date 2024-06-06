@@ -1,4 +1,6 @@
 package com.ticket.ticketProject.service.impl;
 
-public class IngressoServiceImpl {
+import com.ticket.ticketProject.service.IngressoService;
+
+public class IngressoServiceImpl implements IngressoService {
 }

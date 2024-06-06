@@ -1,4 +1,6 @@
 package com.ticket.ticketProject.service.impl;
 
-public class TransacaoServiceImpl {
+import com.ticket.ticketProject.service.TransacaoService;
+
+public class TransacaoServiceImpl implements TransacaoService {
 }

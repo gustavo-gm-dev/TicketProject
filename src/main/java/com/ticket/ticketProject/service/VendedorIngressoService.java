@@ -1,4 +1,4 @@
 package com.ticket.ticketProject.service;
 
-public interface VendedorService {
+public interface VendedorIngressoService {
 }
