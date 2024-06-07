@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -15,11 +17,11 @@ public class Ingresso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String evento;
-    private String data;
-    private double preco;
+    private LocalDate data;
+    private Double preco;
     private String local;
 
     @Enumerated(EnumType.STRING)

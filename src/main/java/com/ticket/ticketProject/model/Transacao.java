@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "transacao")
 @Data // Gera getters, setters, toString, equals, hashCode
@@ -14,6 +16,8 @@ public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private LocalDate data;
 
     @ManyToOne
     @JoinColumn(name = "cliente_ingresso_id")
