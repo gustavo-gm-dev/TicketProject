@@ -1,17 +1,17 @@
 package com.ticket.ticketProject.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "vendedorIngresso")
-@Data // Gera getters, setters, toString, equals, hashCode
-@NoArgsConstructor // Gera um construtor sem argumentos
-@AllArgsConstructor // Gera um construtor com todos os argumentos
 public class VendedorIngresso{
 
     @Id
