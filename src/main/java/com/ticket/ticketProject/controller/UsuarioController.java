@@ -1,9 +1,11 @@
 package com.ticket.ticketProject.controller;
 
-import com.ticket.ticketProject.model.Usuario;
+import com.ticket.ticketProject.model.dto.usuario.CadastrarUsuarioDTO;
+import com.ticket.ticketProject.model.dto.usuario.UsuarioDTO;
 import com.ticket.ticketProject.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +22,15 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid Usuario usuario, UriComponentsBuilder uriBuilder) {
-        service.cadastrarUsuario(usuario);
-        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(usuario);
+    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarUsuarioDTO cadastrarUsuarioDTO, UriComponentsBuilder uriBuilder) {
+        UsuarioDTO usuarioDTO = service.cadastrarUsuario(cadastrarUsuarioDTO);
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuarioDTO.id()).toUri();
+        return ResponseEntity.created(uri).body(usuarioDTO);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Usuario>> listar() {
-        return ResponseEntity.ok(service.listarTodos());
+    @GetMapping("/{id}")
+    public UsuarioDTO usuarioFindById(@PathVariable("id")Long id) {
+        return service.usuarioFindById(id);
     }
 
 }
