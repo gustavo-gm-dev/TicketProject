@@ -27,6 +27,6 @@ public class Ingresso {
     @Enumerated(EnumType.STRING)
     private EstadoIngresso estado;
 
-    @OneToMany(mappedBy = "ingresso", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<VendedorIngresso> vendedorIngressos;
+    @OneToOne(mappedBy = "ingresso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private VendedorIngresso vendedorIngressos;
 }

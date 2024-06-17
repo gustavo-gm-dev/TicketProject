@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private LocalDate data;
 
@@ -31,7 +31,8 @@ public class Transacao {
     @JoinColumn(name = "ingresso_id")
     private Ingresso ingresso;
 
-    private double valor;
+    private Double valor;
+
     @Enumerated(EnumType.STRING)
     private EstadoTransacao estado;
 }

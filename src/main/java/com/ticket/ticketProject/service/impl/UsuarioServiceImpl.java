@@ -28,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO usuarioFindById(Long id) {
-        Optional<Usuario> usuarioOptional = repository.findById(id);
-        return usuarioOptional.map(usuarioMapper::usuarioToUsuarioDto).orElse(null);
+        Optional<Usuario> usuario = repository.findById(id);
+        return usuario.map(usuarioMapper::usuarioToUsuarioDto).orElse(null);
     }
 }
