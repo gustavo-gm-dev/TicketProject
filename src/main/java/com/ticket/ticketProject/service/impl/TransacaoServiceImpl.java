@@ -7,6 +7,7 @@ import com.ticket.ticketProject.model.mapper.TransacaoMapper;
 import com.ticket.ticketProject.repository.*;
 import com.ticket.ticketProject.service.TransacaoService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TransacaoServiceImpl implements TransacaoService {
 
     @Autowired
@@ -77,7 +79,7 @@ public class TransacaoServiceImpl implements TransacaoService {
 
         //Busca Usuario Cliente
         Optional<Usuario> clienteOptional = usuarioRepository.findById(idCliente);
-        if(clienteOptional.isPresent()) {
+        if(clienteOptional.isEmpty()) {
             throw new EntityNotFoundException("Cliente não encontrado com o ID: " + idCliente);
         }
 
@@ -104,7 +106,18 @@ public class TransacaoServiceImpl implements TransacaoService {
         );
 
         transacao = repository.save(transacao);
-        return mapper.transacaoToTransacaoDTO(transacao);
+
+        TransacaoDTO transacaoDTO = new TransacaoDTO(
+                transacao.getId(),
+                transacao.getData(),
+                transacao.getClienteIngresso().getId(),
+                transacao.getVendedorIngresso().getId(),
+                transacao.getIngresso().getId(),
+                transacao.getValor(),
+                transacao.getEstado()
+        );
+
+        return transacaoDTO;
     }
 
     @Override
@@ -135,21 +148,38 @@ public class TransacaoServiceImpl implements TransacaoService {
         if (transacaoMaisRecenteOptional.isEmpty()) {
             throw new EntityNotFoundException("Nenhuma transação válida encontrada para o ingresso com ID: " + idIngresso);
         }
-        Transacao transacaoMaisRecente = transacaoMaisRecenteOptional.get();
+        Transacao transacaoMaisRecente = new Transacao(
+                null,
+                transacaoMaisRecenteOptional.get().getData(),
+                transacaoMaisRecenteOptional.get().getClienteIngresso(),
+                transacaoMaisRecenteOptional.get().getVendedorIngresso(),
+                transacaoMaisRecenteOptional.get().getIngresso(),
+                transacaoMaisRecenteOptional.get().getValor(),
+                transacaoMaisRecenteOptional.get().getEstado()
+        );
 
         // Atualizar estado da transação
         transacaoMaisRecente.setEstado(EstadoTransacao.CONFIRMADA);
-        transacaoMaisRecente.setId(null);
         transacaoMaisRecente = repository.save(transacaoMaisRecente);
 
         // Altera o status do ingresso para vendido
         ingresso.setEstado(EstadoIngresso.VENDIDO);
-        ingressoRepository.save(ingresso);
+        ingresso = ingressoRepository.save(ingresso);
 
         // Atualiza o ingresso na transação confirmada
         transacaoMaisRecente.setIngresso(ingresso);
 
-        return mapper.transacaoToTransacaoDTO(transacaoMaisRecente);
+        TransacaoDTO transacaoDTO = new TransacaoDTO(
+                transacaoMaisRecente.getId(),
+                transacaoMaisRecente.getData(),
+                transacaoMaisRecente.getClienteIngresso().getId(),
+                transacaoMaisRecente.getVendedorIngresso().getId(),
+                transacaoMaisRecente.getIngresso().getId(),
+                transacaoMaisRecente.getValor(),
+                transacaoMaisRecente.getEstado()
+        );
+
+        return transacaoDTO;
     }
 
     @Override
@@ -179,7 +209,15 @@ public class TransacaoServiceImpl implements TransacaoService {
         if (transacaoMaisRecenteOptional.isEmpty()) {
             throw new EntityNotFoundException("Nenhuma transação válida encontrada para o ingresso com ID: " + idIngresso);
         }
-        Transacao transacaoMaisRecente = transacaoMaisRecenteOptional.get();
+        Transacao transacaoMaisRecente = new Transacao(
+                null,
+                transacaoMaisRecenteOptional.get().getData(),
+                transacaoMaisRecenteOptional.get().getClienteIngresso(),
+                transacaoMaisRecenteOptional.get().getVendedorIngresso(),
+                transacaoMaisRecenteOptional.get().getIngresso(),
+                transacaoMaisRecenteOptional.get().getValor(),
+                transacaoMaisRecenteOptional.get().getEstado()
+        );
 
         // Atualizar estado da transação
         transacaoMaisRecente.setEstado(EstadoTransacao.LIBERADA);
@@ -188,12 +226,22 @@ public class TransacaoServiceImpl implements TransacaoService {
 
         // Altera o status do ingresso para vendido
         ingresso.setEstado(EstadoIngresso.RECEBIDO);
-        ingressoRepository.save(ingresso);
+        ingresso = ingressoRepository.save(ingresso);
 
         // Atualiza o ingresso na transação confirmada
         transacaoMaisRecente.setIngresso(ingresso);
 
-        return mapper.transacaoToTransacaoDTO(transacaoMaisRecente);
+        TransacaoDTO transacaoDTO = new TransacaoDTO(
+                transacaoMaisRecente.getId(),
+                transacaoMaisRecente.getData(),
+                transacaoMaisRecente.getClienteIngresso().getId(),
+                transacaoMaisRecente.getVendedorIngresso().getId(),
+                transacaoMaisRecente.getIngresso().getId(),
+                transacaoMaisRecente.getValor(),
+                transacaoMaisRecente.getEstado()
+        );
+
+        return transacaoDTO;
     }
 
 }

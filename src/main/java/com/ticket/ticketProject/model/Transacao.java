@@ -35,4 +35,5 @@ public class Transacao {
 
     @Enumerated(EnumType.STRING)
     private EstadoTransacao estado;
+
 }

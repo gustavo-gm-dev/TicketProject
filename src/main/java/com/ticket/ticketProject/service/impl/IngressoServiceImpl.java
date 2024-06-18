@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class IngressoServiceImpl implements IngressoService {
 
     @Autowired
@@ -56,7 +57,7 @@ public class IngressoServiceImpl implements IngressoService {
     public IngressoDTO cadastrarIngresso(Long idUsuario, CadastrarIngressoDTO dto) {
         //Busca Usuario
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(idUsuario);
-        if(usuarioOptional.isPresent()){
+        if(usuarioOptional.isEmpty()){
             throw new EntityNotFoundException("Usuário não encontrado com ID: " + idUsuario);
         }
 

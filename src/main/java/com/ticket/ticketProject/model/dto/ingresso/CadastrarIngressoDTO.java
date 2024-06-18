@@ -15,7 +15,7 @@ public record CadastrarIngressoDTO(
         Double preco,
         @NotBlank
         String local,
-        @NotBlank
+        @NotNull
         EstadoIngresso estado
 ){
 }
