@@ -1,6 +1,7 @@
 package com.ticket.ticketProject.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,8 +26,9 @@ public class Ingresso {
     private String local;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private EstadoIngresso estado;
 
-    @OneToMany(mappedBy = "ingresso", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<VendedorIngresso> vendedorIngressos;
+    @OneToOne(mappedBy = "ingresso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private VendedorIngresso vendedorIngressos;
 }

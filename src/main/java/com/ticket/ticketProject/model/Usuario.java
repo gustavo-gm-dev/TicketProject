@@ -22,7 +22,4 @@ public class Usuario {
     private LocalDate nascimento;
     private String email;
     private String senha;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<VendedorIngresso> vendedorIngressos;
 }

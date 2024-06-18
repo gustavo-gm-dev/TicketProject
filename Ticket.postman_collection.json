@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "755e5da8-695d-41d8-85f8-a6c30f85a5ea",
+		"name": "Ticket",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18657899"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Criar Usuario",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ingresso",
+			"item": [
+				{
+					"name": "getAllIngressos",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getIngressoById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"evento\": \"QUEM NÃO QUER SOU EU\",\r\n    \"data\": \"2024-06-15\",\r\n    \"preco\": 15.00,\r\n    \"local\": \"Bar do Pedrão / Curitiba / Paraná\",\r\n    \"estado\": \"DISPONIVEL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/ingressos/cadastrar/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ingressos",
+								"cadastrar",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"estado\": \"DISPONIVEL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/ingressos/atualizar",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ingressos",
+								"atualizar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

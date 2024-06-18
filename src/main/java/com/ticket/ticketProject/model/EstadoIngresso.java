@@ -5,5 +5,6 @@ public enum EstadoIngresso {
     VENDIDO,
     ENVIADO,
     RECEBIDO,
-    INVALIDO
+    INVALIDO,
+    RESERVADO
 }

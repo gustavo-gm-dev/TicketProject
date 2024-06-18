@@ -1,18 +1,17 @@
 package com.ticket.ticketProject.service;
 
-import com.ticket.ticketProject.model.Transacao;
+import com.ticket.ticketProject.model.dto.transacao.CadastrarTransacaoDTO;
+import com.ticket.ticketProject.model.dto.transacao.TransacaoDTO;
 
 import java.util.List;
 
 public interface TransacaoService {
 
-    List<Transacao> getAllTransacoes();
+    List<TransacaoDTO> getAllTransacoes(Long idIngresso);
 
-    Transacao createTransacao (Transacao transacao);
+    TransacaoDTO createTransacao (CadastrarTransacaoDTO cadastrartransacaoDTO);
 
-    Transacao confirmarPagamento(Long id);
+    TransacaoDTO confirmarPagamento(Long idIngresso);
 
-    Transacao confirmarRecebimento(Long id);
-
-    Transacao estornarPagamento(Long id);
+    TransacaoDTO confirmarRecebimento(Long idIngresso);
 }

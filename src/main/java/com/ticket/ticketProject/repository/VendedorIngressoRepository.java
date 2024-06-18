@@ -1,4 +1,7 @@
 package com.ticket.ticketProject.repository;
 
-public interface VendedorIngressoRepository {
+import com.ticket.ticketProject.model.VendedorIngresso;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface VendedorIngressoRepository extends JpaRepository<VendedorIngresso, Long> {
 }

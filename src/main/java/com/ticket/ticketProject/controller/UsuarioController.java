@@ -5,7 +5,6 @@ import com.ticket.ticketProject.model.dto.usuario.UsuarioDTO;
 import com.ticket.ticketProject.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,8 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarUsuarioDTO cadastrarUsuarioDTO, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid CadastrarUsuarioDTO cadastrarUsuarioDTO,
+                                    UriComponentsBuilder uriBuilder) {
         UsuarioDTO usuarioDTO = service.cadastrarUsuario(cadastrarUsuarioDTO);
         var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuarioDTO.id()).toUri();
         return ResponseEntity.created(uri).body(usuarioDTO);
