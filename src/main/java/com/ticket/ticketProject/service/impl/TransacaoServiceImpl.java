@@ -39,9 +39,16 @@ public class TransacaoServiceImpl implements TransacaoService {
     TransacaoMapper mapper;
 
     @Override
-    public List<TransacaoDTO> getAllTransacoes(Long id) {
-        //Ajustar para buscar por ingresso
-        List<Transacao> transacoes = repository.findAllById(Collections.singleton(id));
+    public List<TransacaoDTO> getAllTransacoes(Long idIngresso) {
+        Optional<Ingresso> ingressoOptional = ingressoRepository.findById(idIngresso);
+        if(ingressoOptional.isEmpty()){
+            throw new EntityNotFoundException("Ingresso não encontrado com o ID: " + idIngresso);
+        }
+
+        Ingresso ingresso = ingressoOptional.get();
+
+        Optional<List<Transacao>> transacoesOptional = repository.findTransacaoByIngresso(ingresso);
+        List<Transacao> transacoes = transacoesOptional.get();
         List<TransacaoDTO> transacoesDTOs = transacoes.stream()
                 .map(mapper::transacaoToTransacaoDTO)
                 .collect(Collectors.toList());
@@ -146,13 +153,47 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public TransacaoDTO confirmarRecebimento(Long id) {
+    public TransacaoDTO confirmarRecebimento(Long idIngresso) {
+        //Busca Ingresso
+        Optional<Ingresso> ingressoOptional = ingressoRepository.findById(idIngresso);
+        if(ingressoOptional.isEmpty()){
+            throw new EntityNotFoundException("Ingresso não encontrado com o ID: " + idIngresso);
+        }
 
-        return null;
+        Ingresso ingresso = ingressoOptional.get();
+        if (!ingresso.getEstado().equals(EstadoIngresso.VENDIDO)) {
+            //Ingresso deve estar reservado
+            throw new IllegalStateException("Ingresso não está VENDIDO para transacao.");
+        }
+
+        //Buscas os dados de transacao
+        Optional<List<Transacao>> transacoesOptional = repository.findTransacaoByIngresso(ingresso);
+        if(transacoesOptional.isEmpty()){
+            throw new EntityNotFoundException("Transacao não encontrada com os dados informados");
+        }
+
+        //Altera o status para salvar uma nova transacao
+        List<Transacao> transacoes = transacoesOptional.get();
+        Optional<Transacao> transacaoMaisRecenteOptional = transacoes.stream()
+                .max(Comparator.comparing(Transacao::getData));
+        if (transacaoMaisRecenteOptional.isEmpty()) {
+            throw new EntityNotFoundException("Nenhuma transação válida encontrada para o ingresso com ID: " + idIngresso);
+        }
+        Transacao transacaoMaisRecente = transacaoMaisRecenteOptional.get();
+
+        // Atualizar estado da transação
+        transacaoMaisRecente.setEstado(EstadoTransacao.LIBERADA);
+        transacaoMaisRecente.setId(null);
+        transacaoMaisRecente = repository.save(transacaoMaisRecente);
+
+        // Altera o status do ingresso para vendido
+        ingresso.setEstado(EstadoIngresso.RECEBIDO);
+        ingressoRepository.save(ingresso);
+
+        // Atualiza o ingresso na transação confirmada
+        transacaoMaisRecente.setIngresso(ingresso);
+
+        return mapper.transacaoToTransacaoDTO(transacaoMaisRecente);
     }
 
-    @Override
-    public TransacaoDTO estornarPagamento(Long id) {
-        return null;
-    }
 }

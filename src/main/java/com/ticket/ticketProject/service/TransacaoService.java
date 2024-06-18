@@ -7,13 +7,11 @@ import java.util.List;
 
 public interface TransacaoService {
 
-    List<TransacaoDTO> getAllTransacoes(Long id);
+    List<TransacaoDTO> getAllTransacoes(Long idIngresso);
 
     TransacaoDTO createTransacao (CadastrarTransacaoDTO cadastrartransacaoDTO);
 
-    TransacaoDTO confirmarPagamento(Long id);
+    TransacaoDTO confirmarPagamento(Long idIngresso);
 
-    TransacaoDTO confirmarRecebimento(Long id);
-
-    TransacaoDTO estornarPagamento(Long id);
+    TransacaoDTO confirmarRecebimento(Long idIngresso);
 }
