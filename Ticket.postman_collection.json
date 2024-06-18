@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "755e5da8-695d-41d8-85f8-a6c30f85a5ea",
+		"_postman_id": "ebaea2ee-e663-475b-a8ad-09e08d3e4ba4",
 		"name": "Ticket",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18657899"
@@ -10,20 +10,93 @@
 			"name": "Usuario",
 			"item": [
 				{
-					"name": "Criar Usuario",
+					"name": "1 - Criar Vendedor",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\" : \"080.923.020-81\",\r\n    \"nome\" : \"Matheus de Paiva Batista\",\r\n    \"nascimento\" : \"2004-06-01\",\r\n    \"email\" : \"matheuspaiva@gmail.com\",\r\n    \"senha\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "findById",
+					"name": "2 - Criar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\" : \"418.657.140-62\",\r\n    \"nome\" : \"Gustavo Gomes Marcondes\",\r\n    \"nascimento\" : \"2000-08-01\",\r\n    \"email\" : \"gustavogomes@gmail.com\",\r\n    \"senha\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - findByIdVendedor",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:8080/usuarios/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - findByIdCliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuarios/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"2"
+							]
 						}
 					},
 					"response": []
@@ -34,29 +107,13 @@
 			"name": "Ingresso",
 			"item": [
 				{
-					"name": "getAllIngressos",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "getIngressoById",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "cadastrar",
+					"name": "5 - cadastrar",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"evento\": \"QUEM NÃO QUER SOU EU\",\r\n    \"data\": \"2024-06-15\",\r\n    \"preco\": 15.00,\r\n    \"local\": \"Bar do Pedrão / Curitiba / Paraná\",\r\n    \"estado\": \"DISPONIVEL\"\r\n}",
+							"raw": "{\r\n    \"evento\": \"Mostra da Engenharia TI&C\",\r\n    \"data\": \"2024-06-18\",\r\n    \"preco\": 5.00,\r\n    \"local\": \"Unicuritiba / Curitiba / Paraná\",\r\n    \"estado\": \"DISPONIVEL\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -64,7 +121,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/ingressos/cadastrar/3",
+							"raw": "localhost:8080/ingressos/cadastrar/1",
 							"host": [
 								"localhost"
 							],
@@ -72,20 +129,38 @@
 							"path": [
 								"ingressos",
 								"cadastrar",
-								"3"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "atualizar",
+					"name": "6 - getAllIngressosDISPONIVEIS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/ingressos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ingressos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - atualizar",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"estado\": \"DISPONIVEL\"\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"preco\": 20.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -101,6 +176,117 @@
 							"path": [
 								"ingressos",
 								"atualizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - getIngressoById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/ingressos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ingressos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transacao",
+			"item": [
+				{
+					"name": "9 - createTransacao",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2024-06-18\",\r\n    \"idCliente\": 2,\r\n    \"idIngresso\": 1,\r\n    \"valor\": 20.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transacao/cadastrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transacao",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10 - confirmarPagamento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/transacao/pagamento/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transacao",
+								"pagamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11 - confirmarRecebimento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/transacao/recebimento/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transacao",
+								"recebimento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12 - getAllTransacoes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/transacao/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transacao",
+								"1"
 							]
 						}
 					},
